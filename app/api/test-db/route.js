@@ -6,7 +6,7 @@ export async function GET() {
 
         // Get database connection 
         const db = mongoose.connection.db
-        const collectionName = "products";        // I will change this to the collections that will be created for this project
+        const collectionName = "handcrafted-haven";  // I will change this to the collections that will be created for this project
 
     const collection = db.collection(collectionName);
     
