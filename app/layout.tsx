@@ -1,6 +1,8 @@
 import "./globals.css";
 import Image from "next/image";
 import Link from "next/link";
+import { CartProvider } from './shop/components/cartProvider';
+
 
 export const metadata = {
   title: "Handcrafted Haven",
@@ -11,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen flex flex-col bg-[#FFE6A7] text-black">
-
+        
         {/* NAVBAR */}
         <nav className="flex items-center justify-between px-8 py-4 shadow bg-[#6F1D1B] text-white">
           <div className="flex items-center gap-3">
@@ -31,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/" className="hover:opacity-80">Home</Link>
             <Link href="/shop" className="hover:opacity-80">Shop</Link>
             <Link href="/about" className="hover:opacity-80">About Us</Link>
+            
           </div>
 
           <div className="flex gap-4">
@@ -48,6 +51,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
           </div>
         </nav>
+
+        <CartProvider>
+          <main className="flex-grow">{children}</main>
+        </CartProvider>
 
         {/* PAGE CONTENT */}
         <main className="flex-grow">{children}</main>
