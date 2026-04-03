@@ -52,9 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </nav>
 
-        <CartProvider>
-          <main className="flex-grow">{children}</main>
-        </CartProvider>
+       
 
         {/* PAGE CONTENT */}
         <main className="flex-grow">{children}</main>
