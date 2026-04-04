@@ -10,7 +10,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <div className="bg-[#FFE6A7]">
-      {/* Hero Section */}
+      
       <section className="relative h-[150px] flex items-center justify-center bg-[#6F1D1B]">
         <div className="absolute inset-0 bg-black/40 z-10" />
         <div className="relative z-20 text-center text-white px-4 max-w-3xl">
@@ -21,7 +21,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Our Mission */}
       <section className="px-6 md:px-12 py-16 max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
@@ -69,7 +68,7 @@ export default function AboutPage() {
           </p>
         </div>
       </section>
-      
+
       <section className="bg-[#6F1D1B] py-16 px-6 md:px-12">
         <div className="max-w-4xl mx-auto text-center text-white">
           <h2 className="text-3xl font-bold mb-4">
