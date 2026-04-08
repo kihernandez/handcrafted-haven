@@ -1,14 +1,8 @@
-/**
- * Root Layout for the Handcrafted Haven Website.
- * This component defines the overall structure of the website, including the navbar, main content area, and footer.
- */
-
 import "./globals.css";
 import Image from "next/image";
 import Link from "next/link";
 import { getCurrentUser } from "./lib/auth";
 import LogoutButton from "./LogoutButton";
-import Navbar from "../components/Navbar"; 
 
 export const metadata = {
   title: "Handcrafted Haven",
@@ -24,20 +18,18 @@ export const metadata = {
   manifest: "/site.webmanifest",
 };
 
-
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ 
+  children 
+}: { 
+  children: React.ReactNode 
+}) {
   const user = await getCurrentUser();
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen flex flex-col text-black">
-        {/* NAVBAR */}
 
+        {/* NAVBAR */}
         <nav className="flex items-center justify-between px-8 py-4 shadow bg-[#6F1D1B] text-white">
           <div className="flex items-center gap-3">
             <Image
@@ -84,7 +76,6 @@ export default function RootLayout({
             )}
           </div>
         </nav>
-        <Navbar />
 
         {/* PAGE CONTENT */}
         <main className="flex-grow">{children}</main>
@@ -147,5 +138,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
 }
