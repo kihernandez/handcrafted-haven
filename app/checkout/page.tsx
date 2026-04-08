@@ -97,7 +97,7 @@ export default function CheckoutPage() {
               disabled={isSubmitting}
               className="mt-10 w-full bg-[#6F1D1B] text-white py-5 rounded-xl text-xl font-semibold hover:bg-[#5a1716]"
             >
-              {isSubmitting ? "Processing Order..." : `Place Order for Total: $${totalPrice.toLocaleString()}`}
+              {isSubmitting ? "Processing Order..." : `Place Order - Total: $${totalPrice.toLocaleString()}`}
             </button>
           </div>
         </div>
