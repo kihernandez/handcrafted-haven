@@ -1,13 +1,17 @@
 import "./globals.css";
 import Image from "next/image";
 import Link from "next/link";
+import { getCurrentUser } from "./lib/auth";
+import LogoutButton from "./LogoutButton";
 
 export const metadata = {
   title: "Handcrafted Haven",
   description: "Beautiful handmade products",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const user = await getCurrentUser();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen flex flex-col bg-[#FFE6A7] text-black">
@@ -33,19 +37,30 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/about" className="hover:opacity-80">About Us</Link>
           </div>
 
-          <div className="flex gap-4">
-            <Link
-              href="/signin"
-              className="px-4 py-2 border border-white rounded hover:bg-white hover:text-[#6F1D1B] transition"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/signup"
-              className="px-4 py-2 bg-white text-[#6F1D1B] rounded hover:bg-gray-200 transition"
-            >
-              Sign Up
-            </Link>
+          <div className="flex items-center gap-4">
+            {user ? (
+              <div className="flex items-center gap-4">
+                <span className="text-sm">
+                  Welcome, <span className="font-semibold">{user.name}</span>
+                </span>
+                <LogoutButton />
+              </div>
+            ) : (
+              <>
+                <Link
+                  href="/signin"
+                  className="px-4 py-2 border border-white rounded hover:bg-white hover:text-[#6F1D1B] transition"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/register"
+                  className="px-4 py-2 bg-white text-[#6F1D1B] rounded hover:bg-gray-200 transition"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </nav>
 
