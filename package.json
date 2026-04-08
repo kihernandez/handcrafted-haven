@@ -9,9 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "bcryptjs": "^3.0.3",
     "jsonwebtoken": "^9.0.3",
     "next": "18.1.7",
+=======
+    "@neondatabase/serverless": "^1.0.2",
+    "next": "16.1.7",
+>>>>>>> 28bf74382ffe570b966f8986234f41edad2c9e99
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
