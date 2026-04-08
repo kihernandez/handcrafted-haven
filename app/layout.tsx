@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { CartProvider } from './shop/components/cartProvider';
 
-
 export const metadata = {
   title: "Handcrafted Haven",
   description: "Beautiful handmade products",
@@ -33,7 +32,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/" className="hover:opacity-80">Home</Link>
             <Link href="/shop" className="hover:opacity-80">Shop</Link>
             <Link href="/about" className="hover:opacity-80">About Us</Link>
-            
           </div>
 
           <div className="flex gap-4">
@@ -52,17 +50,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </nav>
 
-       
-
-        {/* PAGE CONTENT */}
-        <main className="flex-grow">{children}</main>
+        {/* CartProvider wraps all pages */}
+        <CartProvider>
+          <main className="flex-grow">{children}</main>
+        </CartProvider>
 
         {/* FOOTER */}
         <footer className="bg-[#6F1D1B] text-white text-center py-6 mt-10 flex flex-col items-center gap-2">
           <p>Call us at (123) 456-7890</p>
           <p>© {new Date().getFullYear()} Handcrafted Haven. All rights reserved.</p>
         </footer>
-
       </body>
     </html>
   );

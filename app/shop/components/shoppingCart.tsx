@@ -11,7 +11,7 @@ export default function ShoppingCart() {
 
   return (
     <>
-      {/* Cart Button with Badge */}
+      {/* Cart Button */}
       <button
         onClick={() => setIsOpen(true)}
         className="relative flex items-center gap-2 bg-[#6F1D1B] text-white px-6 py-3 rounded-lg hover:bg-[#5a1716] font-medium"
@@ -30,13 +30,17 @@ export default function ShoppingCart() {
           <div className="bg-white w-full max-w-lg h-full overflow-auto p-8">
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-3xl font-bold text-[#6F1D1B]">Your Cart ({totalItems})</h2>
-              <button onClick={() => setIsOpen(false)} className="text-4xl text-gray-400 hover:text-black">✕</button>
+              <button 
+                onClick={() => setIsOpen(false)} 
+                className="text-4xl text-gray-400 hover:text-black"
+              >
+                ✕
+              </button>
             </div>
 
             {cart.length === 0 ? (
               <p className="text-center text-gray-500 py-16 text-xl">Your cart is empty. Start shopping!</p>
-                      ) : (
-                              
+            ) : (
               <>
                 <div className="space-y-8">
                   {cart.map((item) => (
@@ -79,13 +83,19 @@ export default function ShoppingCart() {
                     <span>Total</span>
                     <span>${totalPrice.toLocaleString()}</span>
                   </div>
-                  
-                  <button className="mt-6 w-full bg-[#6F1D1B] hover:bg-[#5a1716] text-white py-4 rounded-xl text-lg font-semibold">
+
+                  {/* Use Link + onClick to close sidebar */}
+                  <Link 
+                    href="/checkout"
+                    onClick={() => setIsOpen(false)}
+                    className="mt-6 block w-full bg-[#6F1D1B] hover:bg-[#5a1716] text-white py-4 rounded-xl text-lg font-semibold text-center transition"
+                  >
                     Proceed to Checkout
-                  </button>
+                  </Link>
+
                   <button 
                     onClick={clearCart}
-                    className="mt-4 w-full text-red-600 py-2 font-medium"
+                    className="mt-4 w-full text-red-600 py-2 font-medium hover:underline"
                   >
                     Clear Cart
                   </button>
