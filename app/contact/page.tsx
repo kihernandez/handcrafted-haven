@@ -2,8 +2,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Contact Us | Handcrafted Haven",
-  description:
-    "Get in touch with Handcrafted Haven. We'd love to hear from you about our handmade products, custom orders, or any questions you may have.",
+  description: "Get in touch with Handcrafted Haven. We'd love to hear from you about our handmade products, custom orders, or any questions you may have.",
 };
 
 export default function ContactPage() {
@@ -28,8 +27,8 @@ export default function ContactPage() {
             </h2>
             <div className="w-20 h-1 bg-[#6F1D1B] mb-6" />
             <p className="text-gray-700 mb-8 leading-relaxed">
-              Have a question about our handmade products? We'd love to hear from you. Reach out to us
-              through any of the channels below or fill out the form.
+              Have a question about our handmade products? We'd love to hear from you. 
+              Reach out to us through any of the channels below or fill out the form.
             </p>
 
             <div className="space-y-6 mb-8">
@@ -51,8 +50,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-[#6F1D1B] text-lg">Email Us</h3>
-                  <p className="text-gray-600">cse430@handcraftedhaven.com</p>
-                  <p className="text-gray-600">team2@handcraftedhaven.com</p>
+                  <p className="text-gray-600">info@hand.org</p>
                 </div>
               </div>
 
@@ -74,7 +72,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-[#6F1D1B] text-lg">Call Us</h3>
-                  <p className="text-gray-600">+1 (911) 123-4567</p>
+                  <p className="text-gray-600">1-800-666-0000</p>
                   <p className="text-gray-600">Mon-Fri, 9am - 6pm UTC</p>
                 </div>
               </div>
@@ -103,7 +101,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-[#6F1D1B] text-lg">Visit Us</h3>
-                  <p className="text-gray-600">123 BYUIdaho Utah</p>
+                  <p className="text-gray-600">Kaarle, 20810 Turku, Finland</p>
                 </div>
               </div>
             </div>
@@ -141,7 +139,14 @@ export default function ContactPage() {
 
           <div className="bg-white rounded-lg shadow-xl p-8">
             <h3 className="text-2xl font-bold text-[#6F1D1B] mb-6">Send us a Message</h3>
-            <form action="#" method="POST">
+
+            <form
+              action="/contact/confirmation"
+              method="GET"
+              className="bg-white rounded-lg shadow-xl p-8"
+            >
+              <h3 className="text-2xl font-bold text-[#6F1D1B] mb-6">Send us a Message</h3>
+
               <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
                   Full Name *
@@ -194,7 +199,7 @@ export default function ContactPage() {
                   rows={5}
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#6F1D1B] focus:border-transparent"
-                  placeholder="Complient and inquiry......"
+                  placeholder="Compliment and inquiry......"
                 />
               </div>
 
@@ -206,7 +211,7 @@ export default function ContactPage() {
               </button>
 
               <p className="text-xs text-gray-500 text-center mt-4">
-                We'll get back to you within 24-48 hours.
+                We'll get back to you within 24-48 hours. (No actual message will be stored)
               </p>
             </form>
           </div>
