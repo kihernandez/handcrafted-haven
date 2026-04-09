@@ -32,13 +32,13 @@ export default function Navbar() {
         {/* DESKTOP BUTTONS */}
         <div className="hidden md:flex gap-4">
           <Link
-            href="/signin"
+            href="/sign-in"
             className="px-4 py-2 border border-white rounded hover:bg-white hover:text-[#6F1D1B] transition"
           >
             Sign In
           </Link>
           <Link
-            href="/signup"
+            href="/sign-up"
             className="px-4 py-2 bg-white text-[#6F1D1B] rounded hover:bg-gray-200 transition"
           >
             Sign Up
@@ -104,14 +104,14 @@ export default function Navbar() {
           About Us
         </Link>
         <Link
-          href="/signin"
+          href="/sign-in"
           onClick={() => setMenuOpen(false)}
           className="px-4 py-2 border border-white rounded hover:bg-white hover:text-[#6F1D1B] transition text-center"
         >
           Sign In
         </Link>
         <Link
-          href="/signup"
+          href="/sign-up"
           onClick={() => setMenuOpen(false)}
           className="px-4 py-2 bg-white text-[#6F1D1B] rounded hover:bg-gray-200 transition text-center"
         >
