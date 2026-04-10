@@ -1,12 +1,8 @@
-/**
- * Root Layout for the Handcrafted Haven Website.
- * This component defines the overall structure of the website, including the navbar, main content area, and footer.
- */
-
 import "./globals.css";
 import Image from "next/image";
 import Link from "next/link";
-import Navbar from "../components/Navbar"; 
+import { getCurrentUser } from "./lib/auth";
+import LogoutButton from "./LogoutButton";
 
 export const metadata = {
   title: "Handcrafted Haven",
@@ -22,16 +18,64 @@ export const metadata = {
   manifest: "/site.webmanifest",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
+export default async function RootLayout({ 
+  children 
+}: { 
+  children: React.ReactNode 
 }) {
+  const user = await getCurrentUser();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen flex flex-col text-black">
+
         {/* NAVBAR */}
-        <Navbar />
+        <nav className="flex items-center justify-between px-8 py-4 shadow bg-[#6F1D1B] text-white">
+          <div className="flex items-center gap-3">
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={40}
+              height={40}
+              className="h-10 w-10"
+            />
+            <Link href="/" className="text-2xl font-bold">
+              Handcrafted Haven
+            </Link>
+          </div>
+
+          <div className="flex gap-6">
+            <Link href="/" className="hover:opacity-80">Home</Link>
+            <Link href="/shop" className="hover:opacity-80">Shop</Link>
+            <Link href="/about" className="hover:opacity-80">About Us</Link>
+          </div>
+
+          <div className="flex items-center gap-4">
+            {user ? (
+              <div className="flex items-center gap-4">
+                <span className="text-sm">
+                  Welcome, <span className="font-semibold">{user.name}</span>
+                </span>
+                <LogoutButton />
+              </div>
+            ) : (
+              <>
+                <Link
+                  href="/signin"
+                  className="px-4 py-2 border border-white rounded hover:bg-white hover:text-[#6F1D1B] transition"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/register"
+                  className="px-4 py-2 bg-white text-[#6F1D1B] rounded hover:bg-gray-200 transition"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
+          </div>
+        </nav>
 
         {/* PAGE CONTENT */}
         <main className="flex-grow">{children}</main>

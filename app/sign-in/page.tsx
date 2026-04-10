@@ -29,9 +29,18 @@ export default function Page() {
     if (!password) {
       errors.password = "Password is required.";
     } else if (password.length < 8) {
-      errors.password = "Password must be at least 8 characters.";
+      errors.password = "Password must be at least 8 characters long.";
+    } else if (password.length > 32) {
+      errors.password = "Password must be no more than 32 characters.";
+    } else if (!/[A-Z]/.test(password)) {
+      errors.password = "Password must contain at least one uppercase letter (A-Z).";
+    } else if (!/[a-z]/.test(password)) {
+      errors.password = "Password must contain at least one lowercase letter (a-z).";
+    } else if (!/[0-9]/.test(password)) {
+      errors.password = "Password must contain at least one number (0-9).";
+    } else if (!/[^A-Za-z0-9]/.test(password)) {
+      errors.password = "Password must contain at least one special character (!@#$%^&* etc.).";
     }
-
     setFieldErrors(errors);
     return !errors.email && !errors.password;
   };
@@ -48,7 +57,6 @@ export default function Page() {
 
     setIsLoading(true);
 
-    // This is where you would call your authentication API
     setTimeout(() => {
       setSuccess("Welcome back! You have successfully signed in.");
       setIsLoading(false);
@@ -104,11 +112,19 @@ export default function Page() {
               <p className="mt-1 text-sm text-red-600">{fieldErrors.email}</p>
             )}
           </div>
+
           <div>
             <div className="flex justify-between mb-1.5">
               <label className="font-medium text-gray-700" htmlFor="password">
                 Password
               </label>
+              {/* Updated Forgot Password Link */}
+              <Link 
+                href="/forgot-password" 
+                className="text-sm text-[#6F1D1B] hover:underline font-medium"
+              >
+                Forgot password?
+              </Link>
               <a href="#" className="text-sm text-[#6F1D1B] hover:underline">
                 Forgot password?
               </a>
