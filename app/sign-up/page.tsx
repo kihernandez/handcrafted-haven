@@ -15,17 +15,12 @@ export default function Page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState(""); // NEW FIELD
+  const [role, setRole] = useState("");
 
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = useState({ 
-    name: "", 
-    email: "", 
-    password: "", 
-    confirmPassword: "" 
-  });
 
+  // Keep ONLY this one fieldErrors state
   const [fieldErrors, setFieldErrors] = useState({
     name: "",
     email: "",
@@ -35,18 +30,27 @@ export default function Page() {
   });
 
   const validate = () => {
-    const errors = { name: "", email: "", password: "", confirmPassword: "", role: "" };
+    const errors = {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      role: "",
+    };
+
     // Name validation
     if (!name.trim()) {
       errors.name = "Full name is required.";
     }
 
+    // Email validation
     if (!email.trim()) {
       errors.email = "Email is required.";
     } else if (!isValidEmail(email)) {
       errors.email = "Enter a valid email address.";
     }
 
+    // Password validation
     if (!password) {
       errors.password = "Password is required.";
     } else if (password.length < 8) {
@@ -54,36 +58,40 @@ export default function Page() {
     } else if (password.length > 32) {
       errors.password = "Password must be no more than 32 characters.";
     } else if (!/[A-Z]/.test(password)) {
-      errors.password = "Password must contain at least one uppercase letter (A-Z).";
+      errors.password =
+        "Password must contain at least one uppercase letter (A-Z).";
     } else if (!/[a-z]/.test(password)) {
-      errors.password = "Password must contain at least one lowercase letter (a-z).";
+      errors.password =
+        "Password must contain at least one lowercase letter (a-z).";
     } else if (!/[0-9]/.test(password)) {
-      errors.password = "Password must contain at least one number (0-9).";
+      errors.password =
+        "Password must contain at least one number (0-9).";
     } else if (!/[^A-Za-z0-9]/.test(password)) {
-      errors.password = "Password must contain at least one special character (!@#$%^&* etc.).";
+      errors.password =
+        "Password must contain at least one special character (!@#$%^&* etc.).";
     }
-    
 
+    // Confirm password validation
     if (!confirmPassword) {
       errors.confirmPassword = "Please confirm your password.";
     } else if (password !== confirmPassword) {
       errors.confirmPassword = "Passwords do not match.";
     }
-    if (!name.trim()) errors.name = "Full name is required.";
 
-    if (!email.trim()) errors.email = "Email is required.";
-    else if (!isValidEmail(email)) errors.email = "Enter a valid email address.";
-
-    if (!password) errors.password = "Password is required.";
-    else if (password.length < 8) errors.password = "Password must be at least 8 characters.";
-
-    if (!confirmPassword) errors.confirmPassword = "Please confirm your password.";
-    else if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match.";
-
-    if (!role) errors.role = "Please select an account type.";
+    // Role validation
+    if (!role) {
+      errors.role = "Please select an account type.";
+    }
 
     setFieldErrors(errors);
-    return !errors.name && !errors.email && !errors.password && !errors.confirmPassword && !errors.role;
+
+    return (
+      !errors.name &&
+      !errors.email &&
+      !errors.password &&
+      !errors.confirmPassword &&
+      !errors.role
+    );
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -95,9 +103,7 @@ export default function Page() {
       setError("Please fix the highlighted fields before continuing.");
       return;
     }
-    setSuccess("Account created successfully! You can now sign in.");
-    // TODO: Later connect to your backend API here
-    // localStorage so dashboard can read it (for testing purposes until authentication system is implemented)
+
     localStorage.setItem("mockRole", role);
 
     setSuccess("Account created successfully! Redirecting...");
@@ -111,8 +117,12 @@ export default function Page() {
     <div className="flex flex-col justify-center min-h-[70vh] px-4">
       <div className="w-full p-8 max-w-none space-y-6 bg-white rounded-lg shadow-xl border border-[#6F1D1B]/10">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-[#6F1D1B]">Create Account</h2>
-          <p className="text-gray-600 mt-2">Join Handcrafted Haven today</p>
+          <h2 className="text-3xl font-bold text-[#6F1D1B]">
+            Create Account
+          </h2>
+          <p className="text-gray-600 mt-2">
+            Join Handcrafted Haven today
+          </p>
         </div>
 
         {success && (
@@ -130,85 +140,131 @@ export default function Page() {
         <form className="space-y-4" onSubmit={handleSubmit} noValidate>
           {/* NAME */}
           <div>
-            <label className="block mb-1.5 font-medium text-gray-700">Full Name</label>
+            <label className="block mb-1.5 font-medium text-gray-700">
+              Full Name
+            </label>
             <input
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="Enter your name"
               className={`w-full px-4 py-2 border rounded focus:ring-2 focus:ring-[#6F1D1B] ${
-                fieldErrors.name ? "border-red-400" : "border-gray-300"
+                fieldErrors.name
+                  ? "border-red-400"
+                  : "border-gray-300"
               }`}
             />
-            {fieldErrors.name && <p className="text-sm text-red-600">{fieldErrors.name}</p>}
+            {fieldErrors.name && (
+              <p className="text-sm text-red-600">
+                {fieldErrors.name}
+              </p>
+            )}
           </div>
+
           {/* EMAIL */}
           <div>
-            <label className="block mb-1.5 font-medium text-gray-700">Email Address</label>
+            <label className="block mb-1.5 font-medium text-gray-700">
+              Email Address
+            </label>
             <input
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="email@example.com"
               className={`w-full px-4 py-2 border rounded focus:ring-2 focus:ring-[#6F1D1B] ${
-                fieldErrors.email ? "border-red-400" : "border-gray-300"
+                fieldErrors.email
+                  ? "border-red-400"
+                  : "border-gray-300"
               }`}
             />
-            {fieldErrors.email && <p className="text-sm text-red-600">{fieldErrors.email}</p>}
+            {fieldErrors.email && (
+              <p className="text-sm text-red-600">
+                {fieldErrors.email}
+              </p>
+            )}
           </div>
+
           {/* PASSWORD */}
           <div>
-            <label className="block mb-1.5 font-medium text-gray-700">Password</label>
+            <label className="block mb-1.5 font-medium text-gray-700">
+              Password
+            </label>
             <input
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder="••••••••"
               className={`w-full px-4 py-2 border rounded focus:ring-2 focus:ring-[#6F1D1B] ${
-                fieldErrors.password ? "border-red-400" : "border-gray-300"
+                fieldErrors.password
+                  ? "border-red-400"
+                  : "border-gray-300"
               }`}
             />
-            {fieldErrors.password && <p className="text-sm text-red-600">{fieldErrors.password}</p>}
+            {fieldErrors.password && (
+              <p className="text-sm text-red-600">
+                {fieldErrors.password}
+              </p>
+            )}
           </div>
+
           {/* CONFIRM PASSWORD */}
           <div>
-            <label className="block mb-1.5 font-medium text-gray-700">Confirm Password</label>
+            <label className="block mb-1.5 font-medium text-gray-700">
+              Confirm Password
+            </label>
             <input
               type="password"
               value={confirmPassword}
-              onChange={(event) => setConfirmPassword(event.target.value)}
+              onChange={(event) =>
+                setConfirmPassword(event.target.value)
+              }
               placeholder="••••••••"
               className={`w-full px-4 py-2 border rounded focus:ring-2 focus:ring-[#6F1D1B] ${
-                fieldErrors.confirmPassword ? "border-red-400" : "border-gray-300"
+                fieldErrors.confirmPassword
+                  ? "border-red-400"
+                  : "border-gray-300"
               }`}
             />
             {fieldErrors.confirmPassword && (
-              <p className="text-sm text-red-600">{fieldErrors.confirmPassword}</p>
+              <p className="text-sm text-red-600">
+                {fieldErrors.confirmPassword}
+              </p>
             )}
           </div>
+
           {/* Forgot Password Link */}
           <div className="text-right">
-            <Link 
-              href="/forgot-password" 
+            <Link
+              href="/forgot-password"
               className="text-sm text-[#6F1D1B] hover:underline font-medium"
             >
               Forgot Password?
             </Link>
+          </div>
+
           {/* ROLE SELECTION */}
           <div>
-            <label className="block mb-1.5 font-medium text-gray-700">Account Type</label>
+            <label className="block mb-1.5 font-medium text-gray-700">
+              Account Type
+            </label>
             <select
               value={role}
               onChange={(event) => setRole(event.target.value)}
               className={`w-full px-4 py-2 border rounded focus:ring-2 focus:ring-[#6F1D1B] ${
-                fieldErrors.role ? "border-red-400" : "border-gray-300"
+                fieldErrors.role
+                  ? "border-red-400"
+                  : "border-gray-300"
               }`}
             >
               <option value="">Select an option</option>
               <option value="customer">Customer</option>
               <option value="seller">Seller</option>
             </select>
-            {fieldErrors.role && <p className="text-sm text-red-600">{fieldErrors.role}</p>}
+            {fieldErrors.role && (
+              <p className="text-sm text-red-600">
+                {fieldErrors.role}
+              </p>
+            )}
           </div>
 
           <button
@@ -221,7 +277,10 @@ export default function Page() {
 
         <div className="text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <Link href="/sign-in" className="text-[#6F1D1B] font-bold hover:underline">
+          <Link
+            href="/sign-in"
+            className="text-[#6F1D1B] font-bold hover:underline"
+          >
             Sign In
           </Link>
         </div>
