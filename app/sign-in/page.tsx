@@ -84,7 +84,9 @@ export default function Page() {
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-xl border border-[#6F1D1B]/10">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-[#6F1D1B]">Welcome Back</h2>
-          <p className="text-gray-600 mt-2">Please enter your details to sign in</p>
+          <p className="text-gray-600 mt-2">
+            Please enter your details to sign in
+          </p>
         </div>
 
         {success && (
@@ -101,7 +103,10 @@ export default function Page() {
 
         <form className="space-y-5" onSubmit={handleSubmit} noValidate>
           <div>
-            <label className="block mb-1.5 font-medium text-gray-700" htmlFor="email">
+            <label
+              className="block mb-1.5 font-medium text-gray-700"
+              htmlFor="email"
+            >
               Email Address
             </label>
             <input
@@ -124,7 +129,9 @@ export default function Page() {
               <label className="font-medium text-gray-700" htmlFor="password">
                 Password
               </label>
-              <a href="#" className="text-sm text-[#6F1D1B] hover:underline">Forgot password?</a>
+              <a href="#" className="text-sm text-[#6F1D1B] hover:underline">
+                Forgot password?
+              </a>
             </div>
             <input
               type="password"
@@ -138,7 +145,9 @@ export default function Page() {
               required
             />
             {fieldErrors.password && (
-              <p className="mt-1 text-sm text-red-600">{fieldErrors.password}</p>
+              <p className="mt-1 text-sm text-red-600">
+                {fieldErrors.password}
+              </p>
             )}
           </div>
 
@@ -153,7 +162,10 @@ export default function Page() {
 
         <div className="text-center text-sm text-gray-600">
           Don&apos;t have an account?{" "}
-          <Link href="/sign-up" className="text-[#6F1D1B] font-bold hover:underline">
+          <Link
+            href="/sign-up"
+            className="text-[#6F1D1B] font-bold hover:underline"
+          >
             Sign Up
           </Link>
         </div>
