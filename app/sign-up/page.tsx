@@ -2,16 +2,21 @@
 
 import { useState, FormEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function isValidEmail(email: string) {
   return /\S+@\S+\.\S+/.test(email);
 }
 
 export default function Page() {
+  const router = useRouter();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState(""); // NEW FIELD
+
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState({ 
@@ -21,22 +26,27 @@ export default function Page() {
     confirmPassword: "" 
   });
 
-  const validate = () => {
-    const errors = { name: "", email: "", password: "", confirmPassword: "" };
+  const [fieldErrors, setFieldErrors] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    role: "",
+  });
 
+  const validate = () => {
+    const errors = { name: "", email: "", password: "", confirmPassword: "", role: "" };
     // Name validation
     if (!name.trim()) {
       errors.name = "Full name is required.";
     }
 
-    // Email validation
     if (!email.trim()) {
       errors.email = "Email is required.";
     } else if (!isValidEmail(email)) {
       errors.email = "Enter a valid email address.";
     }
 
-    // ==================== STRONG PASSWORD VALIDATION ====================
     if (!password) {
       errors.password = "Password is required.";
     } else if (password.length < 8) {
@@ -54,15 +64,26 @@ export default function Page() {
     }
     
 
-    // Confirm Password validation
     if (!confirmPassword) {
       errors.confirmPassword = "Please confirm your password.";
     } else if (password !== confirmPassword) {
       errors.confirmPassword = "Passwords do not match.";
     }
+    if (!name.trim()) errors.name = "Full name is required.";
+
+    if (!email.trim()) errors.email = "Email is required.";
+    else if (!isValidEmail(email)) errors.email = "Enter a valid email address.";
+
+    if (!password) errors.password = "Password is required.";
+    else if (password.length < 8) errors.password = "Password must be at least 8 characters.";
+
+    if (!confirmPassword) errors.confirmPassword = "Please confirm your password.";
+    else if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match.";
+
+    if (!role) errors.role = "Please select an account type.";
 
     setFieldErrors(errors);
-    return !errors.name && !errors.email && !errors.password && !errors.confirmPassword;
+    return !errors.name && !errors.email && !errors.password && !errors.confirmPassword && !errors.role;
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -74,14 +95,21 @@ export default function Page() {
       setError("Please fix the highlighted fields before continuing.");
       return;
     }
-
     setSuccess("Account created successfully! You can now sign in.");
     // TODO: Later connect to your backend API here
+    // localStorage so dashboard can read it (for testing purposes until authentication system is implemented)
+    localStorage.setItem("mockRole", role);
+
+    setSuccess("Account created successfully! Redirecting...");
+
+    setTimeout(() => {
+      router.push("/dashboard");
+    }, 1200);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[70vh] px-4">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-xl border border-[#6F1D1B]/10">
+    <div className="flex flex-col justify-center min-h-[70vh] px-4">
+      <div className="w-full p-8 max-w-none space-y-6 bg-white rounded-lg shadow-xl border border-[#6F1D1B]/10">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-[#6F1D1B]">Create Account</h2>
           <p className="text-gray-600 mt-2">Join Handcrafted Haven today</p>
@@ -100,86 +128,64 @@ export default function Page() {
         )}
 
         <form className="space-y-4" onSubmit={handleSubmit} noValidate>
+          {/* NAME */}
           <div>
-            <label className="block mb-1.5 font-medium text-gray-700" htmlFor="name">
-              Full Name
-            </label>
+            <label className="block mb-1.5 font-medium text-gray-700">Full Name</label>
             <input
               type="text"
-              id="name"
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="Enter your name"
-              className={`w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#6F1D1B] focus:border-transparent transition-all ${
+              className={`w-full px-4 py-2 border rounded focus:ring-2 focus:ring-[#6F1D1B] ${
                 fieldErrors.name ? "border-red-400" : "border-gray-300"
               }`}
-              required
             />
-            {fieldErrors.name && (
-              <p className="mt-1 text-sm text-red-600">{fieldErrors.name}</p>
-            )}
+            {fieldErrors.name && <p className="text-sm text-red-600">{fieldErrors.name}</p>}
           </div>
-
+          {/* EMAIL */}
           <div>
-            <label className="block mb-1.5 font-medium text-gray-700" htmlFor="email">
-              Email Address
-            </label>
+            <label className="block mb-1.5 font-medium text-gray-700">Email Address</label>
             <input
               type="email"
-              id="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="email@example.com"
-              className={`w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#6F1D1B] focus:border-transparent transition-all ${
+              className={`w-full px-4 py-2 border rounded focus:ring-2 focus:ring-[#6F1D1B] ${
                 fieldErrors.email ? "border-red-400" : "border-gray-300"
               }`}
-              required
             />
-            {fieldErrors.email && (
-              <p className="mt-1 text-sm text-red-600">{fieldErrors.email}</p>
-            )}
+            {fieldErrors.email && <p className="text-sm text-red-600">{fieldErrors.email}</p>}
           </div>
-
+          {/* PASSWORD */}
           <div>
-            <label className="block mb-1.5 font-medium text-gray-700" htmlFor="password">
-              Password
-            </label>
+            <label className="block mb-1.5 font-medium text-gray-700">Password</label>
             <input
               type="password"
-              id="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder="••••••••"
-              className={`w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#6F1D1B] focus:border-transparent transition-all ${
+              className={`w-full px-4 py-2 border rounded focus:ring-2 focus:ring-[#6F1D1B] ${
                 fieldErrors.password ? "border-red-400" : "border-gray-300"
               }`}
-              required
             />
-            {fieldErrors.password && (
-              <p className="mt-1 text-sm text-red-600">{fieldErrors.password}</p>
-            )}
+            {fieldErrors.password && <p className="text-sm text-red-600">{fieldErrors.password}</p>}
           </div>
-
+          {/* CONFIRM PASSWORD */}
           <div>
-            <label className="block mb-1.5 font-medium text-gray-700" htmlFor="confirm-password">
-              Confirm Password
-            </label>
+            <label className="block mb-1.5 font-medium text-gray-700">Confirm Password</label>
             <input
               type="password"
-              id="confirm-password"
               value={confirmPassword}
               onChange={(event) => setConfirmPassword(event.target.value)}
               placeholder="••••••••"
-              className={`w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#6F1D1B] focus:border-transparent transition-all ${
+              className={`w-full px-4 py-2 border rounded focus:ring-2 focus:ring-[#6F1D1B] ${
                 fieldErrors.confirmPassword ? "border-red-400" : "border-gray-300"
               }`}
-              required
             />
             {fieldErrors.confirmPassword && (
-              <p className="mt-1 text-sm text-red-600">{fieldErrors.confirmPassword}</p>
+              <p className="text-sm text-red-600">{fieldErrors.confirmPassword}</p>
             )}
           </div>
-
           {/* Forgot Password Link */}
           <div className="text-right">
             <Link 
@@ -188,6 +194,21 @@ export default function Page() {
             >
               Forgot Password?
             </Link>
+          {/* ROLE SELECTION */}
+          <div>
+            <label className="block mb-1.5 font-medium text-gray-700">Account Type</label>
+            <select
+              value={role}
+              onChange={(event) => setRole(event.target.value)}
+              className={`w-full px-4 py-2 border rounded focus:ring-2 focus:ring-[#6F1D1B] ${
+                fieldErrors.role ? "border-red-400" : "border-gray-300"
+              }`}
+            >
+              <option value="">Select an option</option>
+              <option value="customer">Customer</option>
+              <option value="seller">Seller</option>
+            </select>
+            {fieldErrors.role && <p className="text-sm text-red-600">{fieldErrors.role}</p>}
           </div>
 
           <button
