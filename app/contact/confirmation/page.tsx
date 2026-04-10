@@ -69,17 +69,6 @@ export default function ContactConfirmationPage() {
             </Link>
           </div>
         </div>
-
-        {/* Additional helpful links */}
-        <div className="mt-8 text-center">
-          <p className="text-gray-600 text-sm">
-            In the meantime, you might check out our{" "}
-            <Link href="/shipping" className="text-[#6F1D1B] font-medium hover:underline">
-              shipping policy
-            </Link>
-            .
-          </p>
-        </div>
       </section>
     </div>
   );
