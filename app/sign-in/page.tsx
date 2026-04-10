@@ -48,15 +48,35 @@ export default function Page() {
 
     setIsLoading(true);
 
-    // This is where you would call your authentication API
-    setTimeout(() => {
+    try {
+      const response = await fetch("/api/sign-in", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Login failed. Please try again.");
+        setIsLoading(false);
+        return;
+      }
+
       setSuccess("Welcome back! You have successfully signed in.");
       setIsLoading(false);
 
+      // Redirect after a short delay
       setTimeout(() => {
         router.push("/");
       }, 1500);
-    }, 1000);
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("An error occurred during login. Please try again.");
+      setIsLoading(false);
+    }
   };
 
   return (
