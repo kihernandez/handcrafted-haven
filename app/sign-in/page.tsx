@@ -70,7 +70,7 @@ export default function Page() {
 
       // Redirect after a short delay
       setTimeout(() => {
-        router.push("/");
+        router.push("/dashboard");
       }, 1500);
     } catch (err) {
       console.error("Login error:", err);
