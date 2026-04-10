@@ -14,37 +14,47 @@ export default function Page() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = useState({ name: "", email: "", password: "", confirmPassword: "" });
+  const [fieldErrors, setFieldErrors] = useState({ 
+    name: "", 
+    email: "", 
+    password: "", 
+    confirmPassword: "" 
+  });
 
   const validate = () => {
     const errors = { name: "", email: "", password: "", confirmPassword: "" };
 
+    // Name validation
     if (!name.trim()) {
       errors.name = "Full name is required.";
     }
 
+    // Email validation
     if (!email.trim()) {
       errors.email = "Email is required.";
     } else if (!isValidEmail(email)) {
       errors.email = "Enter a valid email address.";
     }
 
+    // ==================== STRONG PASSWORD VALIDATION ====================
     if (!password) {
       errors.password = "Password is required.";
     } else if (password.length < 8) {
-      errors.password = "Password must be at least 8 characters.";
+      errors.password = "Password must be at least 8 characters long.";
     } else if (password.length > 32) {
-      errors.password = "Password must be 32 characters or fewer.";
+      errors.password = "Password must be no more than 32 characters.";
     } else if (!/[A-Z]/.test(password)) {
-      errors.password = "Password must contain at least one uppercase letter.";
+      errors.password = "Password must contain at least one uppercase letter (A-Z).";
     } else if (!/[a-z]/.test(password)) {
-      errors.password = "Password must contain at least one lowercase letter.";
+      errors.password = "Password must contain at least one lowercase letter (a-z).";
     } else if (!/[0-9]/.test(password)) {
-      errors.password = "Password must contain at least one number.";
+      errors.password = "Password must contain at least one number (0-9).";
     } else if (!/[^A-Za-z0-9]/.test(password)) {
-      errors.password = "Password must contain at least one symbol.";
+      errors.password = "Password must contain at least one special character (!@#$%^&* etc.).";
     }
+    
 
+    // Confirm Password validation
     if (!confirmPassword) {
       errors.confirmPassword = "Please confirm your password.";
     } else if (password !== confirmPassword) {
@@ -66,6 +76,7 @@ export default function Page() {
     }
 
     setSuccess("Account created successfully! You can now sign in.");
+    // TODO: Later connect to your backend API here
   };
 
   return (
@@ -108,6 +119,7 @@ export default function Page() {
               <p className="mt-1 text-sm text-red-600">{fieldErrors.name}</p>
             )}
           </div>
+
           <div>
             <label className="block mb-1.5 font-medium text-gray-700" htmlFor="email">
               Email Address
@@ -127,6 +139,7 @@ export default function Page() {
               <p className="mt-1 text-sm text-red-600">{fieldErrors.email}</p>
             )}
           </div>
+
           <div>
             <label className="block mb-1.5 font-medium text-gray-700" htmlFor="password">
               Password
@@ -146,6 +159,7 @@ export default function Page() {
               <p className="mt-1 text-sm text-red-600">{fieldErrors.password}</p>
             )}
           </div>
+
           <div>
             <label className="block mb-1.5 font-medium text-gray-700" htmlFor="confirm-password">
               Confirm Password
@@ -164,6 +178,16 @@ export default function Page() {
             {fieldErrors.confirmPassword && (
               <p className="mt-1 text-sm text-red-600">{fieldErrors.confirmPassword}</p>
             )}
+          </div>
+
+          {/* Forgot Password Link */}
+          <div className="text-right">
+            <Link 
+              href="/forgot-password" 
+              className="text-sm text-[#6F1D1B] hover:underline font-medium"
+            >
+              Forgot Password?
+            </Link>
           </div>
 
           <button
