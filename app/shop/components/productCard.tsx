@@ -3,13 +3,15 @@
 import Image from 'next/image';
 import { useCart } from './cartProvider';
 import { useState, useEffect } from 'react';
-import { Star } from 'lucide-react';   // Install: npm install lucide-react
+import { Star } from 'lucide-react';   // This is to install lucide-react so i can add stars for review
+import Link from 'next/link';
 
 type Product = {
   id: number;
   name: string;
   price: number;
   image: string;
+  category: string;
 };
 
 type Review = {
@@ -60,7 +62,7 @@ export default function ProductCard({ product }: { product: Product }) {
     setNewRating(5);
     setShowReviewModal(false);
     
-    alert("Thank you for your review! ✨");
+    alert("Thank you for your review!");
   };
 
   return (
@@ -99,7 +101,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <div className="flex gap-3 mt-6">
             <button 
               onClick={() => addToCart(product)}
-              className="flex-1 bg-[#6F1D1B] hover:bg-[#5a1716] text-white py-3 rounded-lg font-medium transition"
+              className="flex-1 bg-[#6F1D1B] hover:bg-[#5a1716] active:scale-95 transition-all text-white py-3 rounded-lg font-medium transition"
             >
               Add to Cart
             </button>
