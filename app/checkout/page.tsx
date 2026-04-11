@@ -53,9 +53,14 @@ export default function CheckoutPage() {
       </div>
     );
   }
+  
 
   return (
+    
     <div className="min-h-screen bg-[#FFE6A7] py-12 px-6">
+      <Link href="/shop" className="mb-6 inline-flex items-center text-[#6F1654] active:scale-95">
+        ← Back to Shop
+        </Link>
       <div className="max-w-5xl mx-auto">
         <h1 className="text-5xl font-bold text-[#6F1D1B] text-center mb-12">Checkout</h1>
 
@@ -66,7 +71,7 @@ export default function CheckoutPage() {
             {cart.map(item => (
               <div key={item.id} className="flex gap-4 py-4 border-b last:border-none">
                 <div className="relative w-20 h-20">
-                  <Image src={item.image} alt={item.name} fill className="object-cover rounded" />
+                  <Image src={item.image_url} alt={item.name} fill className="object-cover rounded" />
                 </div>
                 <div>
                   <h4>{item.name}</h4>

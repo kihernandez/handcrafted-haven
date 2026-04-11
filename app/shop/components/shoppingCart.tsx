@@ -41,12 +41,12 @@ export default function ShoppingCart() {
             {cart.length === 0 ? (
               <p className="text-center text-gray-500 py-16 text-xl">Your cart is empty. Start shopping!</p>
             ) : (
-              <>
+                <>
                 <div className="space-y-8">
                   {cart.map((item) => (
                     <div key={item.id} className="flex gap-5 border-b pb-6">
                       <div className="relative w-28 h-28 flex-shrink-0">
-                        <Image src={item.image} alt={item.name} fill className="object-cover rounded" />
+                        <Image src={item.image_url} alt={item.name} fill className="object-cover rounded" />
                       </div>
                       <div className="flex-1">
                         <h4 className="font-semibold text-lg">{item.name}</h4>
@@ -91,7 +91,8 @@ export default function ShoppingCart() {
                     className="mt-6 block w-full bg-[#6F1D1B] hover:bg-[#5a1716] text-white py-4 rounded-xl text-lg font-semibold text-center transition"
                   >
                     Proceed to Checkout
-                  </Link>
+                    </Link>
+                    
 
                   <button 
                     onClick={clearCart}

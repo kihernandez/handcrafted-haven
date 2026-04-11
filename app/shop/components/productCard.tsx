@@ -10,7 +10,8 @@ type Product = {
   id: number;
   name: string;
   price: number;
-  image: string;
+  image_url: string;
+  description: string;
   category: string;
 };
 
@@ -22,6 +23,7 @@ type Review = {
 };
 
 export default function ProductCard({ product }: { product: Product }) {
+  
   const { addToCart } = useCart();
   
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -29,6 +31,8 @@ export default function ProductCard({ product }: { product: Product }) {
   const [newRating, setNewRating] = useState(5);
   const [newComment, setNewComment] = useState('');
   const [hoverRating, setHoverRating] = useState(0);
+
+  
 
   // Load reviews from localStorage
   useEffect(() => {
@@ -70,15 +74,20 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="border border-[#6F1D1B]/20 rounded-xl overflow-hidden shadow hover:shadow-xl transition bg-white">
         <div className="relative h-64">
           <Image 
-            src={product.image} 
+            src={product.image_url || '/images/placeholder.jpg'} 
             alt={product.name} 
             fill 
             className="object-cover" 
           />
+          
         </div>
         
         <div className="p-5">
-          <h3 className="font-semibold text-xl text-[#6F1D1B] mb-1">{product.name}</h3>
+          <Link href={`/shop/${product.id}`} className="font-semibold text-xl text-[#6F1D1B] hover:bg-[#FFE6A7]">{product.name}</Link>
+          
+          {/* <Link href={`/shop/${product.id}`} className="flex-1 border border-[#6F1D1B] hover-[#FFE6A7] text-[#6F1D1B] py-2 rounded-lg font-medium text-center transition block">
+            View Details
+          </Link> */}
           
           {/* Rating Display */}
           <div className="flex items-center gap-2 mb-3">
@@ -98,10 +107,11 @@ export default function ProductCard({ product }: { product: Product }) {
 
           <p className="text-2xl font-bold text-[#6F1D1B]">${product.price.toLocaleString()}</p>
           
+          
           <div className="flex gap-3 mt-6">
             <button 
               onClick={() => addToCart(product)}
-              className="flex-1 bg-[#6F1D1B] hover:bg-[#5a1716] active:scale-95 transition-all text-white py-3 rounded-lg font-medium transition"
+              className="flex-1 bg-[#6F1D1B] hover:bg-[#FFE6A7] active:scale-95 transition-all text-white py-3 rounded-lg font-medium transition"
             >
               Add to Cart
             </button>
