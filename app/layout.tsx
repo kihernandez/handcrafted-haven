@@ -6,6 +6,7 @@
 import "./globals.css";
 import Image from "next/image";
 import Link from "next/link";
+import { CartProvider } from './shop/components/cartProvider';
 import Navbar from "../components/Navbar"; 
 
 export const metadata = {
@@ -29,12 +30,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen flex flex-col text-black">
+      <body className="min-h-screen flex flex-col bg-[#FFE6A7] text-black">
+
         {/* NAVBAR */}
         <Navbar />
 
-        {/* PAGE CONTENT */}
-        <main className="flex-grow">{children}</main>
+        {/* CartProvider wraps all pages */}
+        <CartProvider>
+          <main className="flex-grow">{children}</main>
+        </CartProvider>
 
         {/* FOOTER */}
         <footer className="bg-[#6F1D1B] text-white px-8 py-8 mt-10">
