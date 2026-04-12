@@ -20,8 +20,6 @@ export default function Page() {
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [fieldErrors, setFieldErrors] = useState({ name: "", email: "", password: "", confirmPassword: "" });
-  const router = useRouter();
 
   const [fieldErrors, setFieldErrors] = useState({
     name: "",
@@ -41,6 +39,11 @@ export default function Page() {
 
     if (!password) errors.password = "Password is required.";
     else if (password.length < 8) errors.password = "Password must be at least 8 characters.";
+    else if (password.length > 32) errors.password = "Password must be 32 characters or fewer.";
+    else if (!/[A-Z]/.test(password)) errors.password = "Password must contain at least one uppercase letter.";
+    else if (!/[a-z]/.test(password)) errors.password = "Password must contain at least one lowercase letter.";
+    else if (!/[0-9]/.test(password)) errors.password = "Password must contain at least one number.";
+    else if (!/[^A-Za-z0-9]/.test(password)) errors.password = "Password must contain at least one symbol.";
 
     if (!confirmPassword) errors.confirmPassword = "Please confirm your password.";
     else if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match.";
@@ -96,10 +99,6 @@ export default function Page() {
     localStorage.setItem("mockRole", role);
 
     setSuccess("Account created successfully! Redirecting...");
-
-    setTimeout(() => {
-      router.push("/dashboard");
-    }, 1200);
   };
 
   return (
