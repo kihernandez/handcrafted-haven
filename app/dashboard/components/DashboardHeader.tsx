@@ -5,9 +5,24 @@ import { useRouter } from "next/navigation";
 export default function DashboardHeader() {
   const router = useRouter();
 
-  const handleLogout = () => {
-    // UI-only logout simulation
-    router.push("/sign-in");
+  const handleLogout = async () => {
+    try {
+      // 1. Call the API route to clear the cookie
+      const response = await fetch("/api/sign-out", {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        // 2. Redirect to sign-in page after successful server-side logout
+        router.push("/sign-in");
+        // Refresh the page to clear any client-side state
+        router.refresh();
+      } else {
+        console.error("Logout failed on the server.");
+      }
+    } catch (error) {
+      console.error("An error occurred during logout:", error);
+    }
   };
 
   return (
