@@ -14,7 +14,9 @@
     "jsonwebtoken": "^9.0.3",
     "next": "16.2.2",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "lucide-react": "^1.7.0",
+    "next-auth": "^4.24.13"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
