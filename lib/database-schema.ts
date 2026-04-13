@@ -13,6 +13,7 @@ export async function initializeDatabase() {
         name VARCHAR(255) NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
         password_hash VARCHAR(255) NOT NULL,
+        role VARCHAR(50) NOT NULL DEFAULT 'customer',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
@@ -37,7 +38,7 @@ export async function initializeDatabase() {
 export async function getUserByEmail(email: string) {
   try {
     const result = await sql`
-      SELECT id, name, email, password_hash, created_at FROM users
+      SELECT id, name, email, password_hash, role, created_at FROM users
       WHERE email = ${email.toLowerCase()}
       LIMIT 1;
     `;
@@ -54,7 +55,7 @@ export async function getUserByEmail(email: string) {
 export async function getUserById(id: number) {
   try {
     const result = await sql`
-      SELECT id, name, email, created_at FROM users
+      SELECT id, name, email, role, created_at FROM users
       WHERE id = ${id}
       LIMIT 1;
     `;
@@ -71,13 +72,14 @@ export async function getUserById(id: number) {
 export async function createUser(
   name: string,
   email: string,
-  passwordHash: string
+  passwordHash: string,
+  role: string = 'customer'
 ) {
   try {
     const result = await sql`
-      INSERT INTO users (name, email, password_hash)
-      VALUES (${name}, ${email.toLowerCase()}, ${passwordHash})
-      RETURNING id, name, email, created_at;
+      INSERT INTO users (name, email, password_hash, role)
+      VALUES (${name}, ${email.toLowerCase()}, ${passwordHash}, ${role})
+      RETURNING id, name, email, role, created_at;
     `;
     return result[0];
   } catch (error) {
