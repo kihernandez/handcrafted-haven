@@ -4,6 +4,7 @@ export interface JwtPayload {
   userId: number;
   email: string;
   name: string;
+  role: string;
 }
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-this";
