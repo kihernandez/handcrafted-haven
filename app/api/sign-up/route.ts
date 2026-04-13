@@ -4,12 +4,20 @@ import { hashPassword } from "@/lib/password";
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, password } = await request.json();
+    const { name, email, password, role } = await request.json();
 
     // Validate input
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !role) {
       return NextResponse.json(
-        { error: "Name, email, and password are required" },
+        { error: "Name, email, password, and role are required" },
+        { status: 400 }
+      );
+    }
+
+    // Validate role
+    if (!['customer', 'seller'].includes(role)) {
+      return NextResponse.json(
+        { error: "Role must be either 'customer' or 'seller'" },
         { status: 400 }
       );
     }
@@ -71,8 +79,8 @@ export async function POST(request: NextRequest) {
     // Hash password
     const passwordHash = await hashPassword(password);
 
-    // Create user
-    const newUser = await createUser(name, email, passwordHash);
+    // Create user with role
+    const newUser = await createUser(name, email, passwordHash, role);
 
     return NextResponse.json(
       {
@@ -82,6 +90,7 @@ export async function POST(request: NextRequest) {
           id: newUser.id,
           name: newUser.name,
           email: newUser.email,
+          role: newUser.role,
         },
       },
       { status: 201 }
