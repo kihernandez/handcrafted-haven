@@ -42,11 +42,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate JWT token
+    // Generate JWT token with role
     const token = generateToken({
       userId: user.id,
       email: user.email,
       name: user.name,
+      role: user.role,
     });
 
     // Create response with token in httpOnly cookie
@@ -58,6 +59,7 @@ export async function POST(request: NextRequest) {
           id: user.id,
           name: user.name,
           email: user.email,
+          role: user.role,
         },
         token,
       },
