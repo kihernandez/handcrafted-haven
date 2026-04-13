@@ -72,7 +72,7 @@ export default function Page() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, role }),
       });
 
       const data = await response.json();
@@ -95,10 +95,6 @@ export default function Page() {
       setError("An error occurred during registration. Please try again.");
       setIsLoading(false);
     }
-    // localStorage so dashboard can read it (for testing purposes until authentication system is implemented)
-    localStorage.setItem("mockRole", role);
-
-    setSuccess("Account created successfully! Redirecting...");
   };
 
   return (
