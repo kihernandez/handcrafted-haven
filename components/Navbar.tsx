@@ -7,6 +7,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import NavbarClient from './NavbarClient';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,22 +32,11 @@ export default function Navbar() {
 
         {/* DESKTOP BUTTONS */}
         <div className="hidden md:flex gap-4">
-          <Link
-            href="/sign-in"
-            className="px-4 py-2 border border-white rounded hover:bg-white hover:text-[#6F1D1B] transition"
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/sign-up"
-            className="px-4 py-2 bg-white text-[#6F1D1B] rounded hover:bg-gray-200 transition"
-          >
-            Sign Up
-          </Link>
+          <NavbarClient />
         </div>
 
         {/* HAMBURGER BUTTON (MOBILE) */}
-        <button
+        <button type="button"
           className="md:hidden relative w-8 h-8 flex flex-col justify-between items-center z-50"
           onClick={() => setMenuOpen(!menuOpen)}
         >
