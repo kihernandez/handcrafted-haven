@@ -48,13 +48,14 @@ export default function Page() {
 
     setIsLoading(true);
 
-    // This is where you would call your authentication API
+    // Simulated login
     setTimeout(() => {
       setSuccess("Welcome back! You have successfully signed in.");
       setIsLoading(false);
 
+      // Force full reload so navbar updates with "Welcome, Name"
       setTimeout(() => {
-        router.push("/");
+        window.location.href = "/";
       }, 1500);
     }, 1000);
   };
@@ -104,14 +105,18 @@ export default function Page() {
               <p className="mt-1 text-sm text-red-600">{fieldErrors.email}</p>
             )}
           </div>
+
           <div>
             <div className="flex justify-between mb-1.5">
               <label className="font-medium text-gray-700" htmlFor="password">
                 Password
               </label>
-              <a href="#" className="text-sm text-[#6F1D1B] hover:underline">
+              <Link 
+                href="/forgot-password" 
+                className="text-sm text-[#6F1D1B] hover:underline"
+              >
                 Forgot password?
-              </a>
+              </Link>
             </div>
             <input
               type="password"
@@ -142,8 +147,8 @@ export default function Page() {
 
         <div className="text-center text-sm text-gray-600">
           Don&apos;t have an account?{" "}
-          <Link
-            href="/sign-up"
+          <Link 
+            href="/sign-up" 
             className="text-[#6F1D1B] font-bold hover:underline"
           >
             Sign Up
