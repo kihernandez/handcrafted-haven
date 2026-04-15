@@ -9,6 +9,10 @@ import ProductCard from "./shop/components/productCard";
 import { Product } from "@/app/types/Product";
 import ShoppingCart from "./shop/components/shoppingCart";
 
+
+export const dynamic = "force-dynamic";
+
+
 async function getTopProducts(): Promise<Product[]> {
   try {
     const res = await fetch(
