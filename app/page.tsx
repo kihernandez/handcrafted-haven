@@ -1,37 +1,13 @@
 /**
  * Home Page for Handcrafted Haven
- * Dynamic Top Products Section using ProductCard
  */
 
 import Image from "next/image";
 import Link from "next/link";
 import ProductCard from "./shop/components/productCard";
-import { Product } from "@/app/types/Product";
 import ShoppingCart from "./shop/components/shoppingCart";
 
-async function getTopProducts(): Promise<Product[]> {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/products`,
-      {
-        cache: "no-store",
-      },
-    );
-
-    if (!res.ok) return [];
-
-    const products: Product[] = await res.json();
-
-    return products.slice(0, 3); 
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    return [];
-  }
-}
-
-export default async function Home() {
-  const topProducts = await getTopProducts();
-
+export default function Home() {
   return (
     <div>
       {/* HERO SECTION */}
@@ -59,24 +35,53 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* TOP PRODUCTS (DYNAMIC + ProductCard) */}
+      {/* TOP PRODUCTS */}
       <section className="px-12 py-16 bg-[#FFE6A7]">
-        <div className="flex justify-between items-center mb-10">
-          <h2 className="text-4xl font-bold text-[#6F1D1B]">Top Products</h2>
-          <ShoppingCart />
-        </div>
-        {topProducts.length === 0 ? (
-          <p className="text-center text-gray-700">
-            No products available yet. Check back soon!
-          </p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {topProducts.map((product: Product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        )}
-      </section>
+  <div className="flex justify-between items-center mb-10">
+    <h2 className="text-4xl font-bold text-[#6F1D1B]">Top Products</h2>
+    <ShoppingCart />
+  </div>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+
+    {/* Product 1 */}
+    <ProductCard
+      product={{
+        id: 1,
+        name: "Vanilla Candle",
+        price: 12.99,
+        description: "Hand-poured vanilla scented candle.",
+        category: "Candles",
+        image_url: "/images/vanilla_candle.jpg",
+      }}
+    />
+
+    {/* Product 2 */}
+    <ProductCard
+      product={{
+        id: 4,
+        name: "Crochet Plushie Gray",
+        price: 18.99,
+        description: "Soft gray crochet plushie.",
+        category: "Plushies",
+        image_url: "/images/crochet_plushie_gray.jpg",
+      }}
+    />
+
+    {/* Product 3 */}
+    <ProductCard
+      product={{
+        id: 14,
+        name: "Greek Bracelet",
+        price: 14.99,
+        description: "Handmade bracelet with Greek-inspired design.",
+        category: "Jewelry",
+        image_url: "/images/greek_bracelet.webp",
+      }}
+    />
+
+  </div>
+</section>
 
       {/* WHY CHOOSE US */}
       <section className="px-42 py-16 bg-white text-background">
