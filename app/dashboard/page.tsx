@@ -1,29 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import { useAuth } from "@/lib/use-auth";
 import SellerDashboard from "./components/SellerDashboard";
 import CustomerDashboard from "./components/CustomerDashboard";
 
 export default function DashboardPage() {
-  const [role, setRole] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadRole = () => {
-      const savedRole = localStorage.getItem("mockRole");
-      setRole(savedRole);
-    };
-
-    loadRole();
-  }, []);
-
-  if (!role) {
-    return <div className="p-10 text-center">Loading dashboard...</div>;
-  }
+  const { user } = useAuth();
 
   return (
-    <>
-      {role === "seller" && <SellerDashboard />}
-      {role === "customer" && <CustomerDashboard />}
-    </>
+    <ProtectedRoute>
+      {user?.role === "seller" ? <SellerDashboard /> : <CustomerDashboard />}
+    </ProtectedRoute>
   );
 }

@@ -19,6 +19,7 @@ export default function Page() {
 
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [fieldErrors, setFieldErrors] = useState({
     name: "",
@@ -38,6 +39,11 @@ export default function Page() {
 
     if (!password) errors.password = "Password is required.";
     else if (password.length < 8) errors.password = "Password must be at least 8 characters.";
+    else if (password.length > 32) errors.password = "Password must be 32 characters or fewer.";
+    else if (!/[A-Z]/.test(password)) errors.password = "Password must contain at least one uppercase letter.";
+    else if (!/[a-z]/.test(password)) errors.password = "Password must contain at least one lowercase letter.";
+    else if (!/[0-9]/.test(password)) errors.password = "Password must contain at least one number.";
+    else if (!/[^A-Za-z0-9]/.test(password)) errors.password = "Password must contain at least one symbol.";
 
     if (!confirmPassword) errors.confirmPassword = "Please confirm your password.";
     else if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match.";
@@ -48,7 +54,7 @@ export default function Page() {
     return !errors.name && !errors.email && !errors.password && !errors.confirmPassword && !errors.role;
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
     setSuccess(null);
@@ -58,14 +64,37 @@ export default function Page() {
       return;
     }
 
-    // localStorage so dashboard can read it (for testing purposes until authentication system is implemented)
-    localStorage.setItem("mockRole", role);
+    setIsLoading(true);
 
-    setSuccess("Account created successfully! Redirecting...");
+    try {
+      const response = await fetch("/api/sign-up", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password, role }),
+      });
 
-    setTimeout(() => {
-      router.push("/dashboard");
-    }, 1200);
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Registration failed. Please try again.");
+        setIsLoading(false);
+        return;
+      }
+
+      setSuccess("Account created successfully! Redirecting to sign in...");
+      setIsLoading(false);
+
+      // Redirect to sign-in page
+      setTimeout(() => {
+        router.push("/sign-in");
+      }, 1500);
+    } catch (err) {
+      console.error("Sign-up error:", err);
+      setError("An error occurred during registration. Please try again.");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -170,9 +199,10 @@ export default function Page() {
 
           <button
             type="submit"
-            className="w-full py-3 mt-2 text-white bg-[#6F1D1B] rounded-md hover:bg-[#5a1716] transition-colors font-bold shadow-md"
+            disabled={isLoading}
+            className="w-full py-3 mt-2 text-white bg-[#6F1D1B] rounded-md hover:bg-[#5a1716] transition-colors font-bold shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Sign Up
+            {isLoading ? "Creating Account..." : "Sign Up"}
           </button>
         </form>
 

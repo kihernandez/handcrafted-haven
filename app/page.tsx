@@ -1,10 +1,11 @@
-/** 
+/**
  * Home Page for Handcrafted Haven
- * This component renders the main landing page of the website, showcasing the hero section, top products, reasons to join, and customer testimonials.
  */
 
 import Image from "next/image";
 import Link from "next/link";
+import ProductCard from "./shop/components/productCard";
+import ShoppingCart from "./shop/components/shoppingCart";
 
 export default function Home() {
   return (
@@ -36,47 +37,51 @@ export default function Home() {
 
       {/* TOP PRODUCTS */}
       <section className="px-12 py-16 bg-[#FFE6A7]">
-        <h2 className="text-3xl font-bold mb-8 text-[#6F1D1B] text-center">
-          Top Products
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          <div className="border p-4 rounded shadow hover:shadow-lg transition bg-white">
-            <Image
-              src="/snowman-figurine.webp"
-              alt="Snowman Figurine"
-              width={400}
-              height={300}
-              className="h-40 w-full object-cover rounded mb-4"
-            />
-            <h3 className="font-semibold text-black">Snowman Figurine</h3>
-            <p className="text-gray-700">$29.99</p>
-          </div>
+  <div className="flex justify-between items-center mb-10">
+    <h2 className="text-4xl font-bold text-[#6F1D1B]">Top Products</h2>
+    <ShoppingCart />
+  </div>
 
-          <div className="border p-4 rounded shadow hover:shadow-lg transition bg-white">
-            <Image
-              src="/wooden-vase.webp"
-              alt="Vase"
-              width={400}
-              height={300}
-              className="h-40 w-full object-cover rounded mb-4"
-            />
-            <h3 className="font-semibold text-black">Wooden Vase</h3>
-            <p className="text-gray-700">$39.99</p>
-          </div>
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
 
-          <div className="border p-4 rounded shadow hover:shadow-lg transition bg-white">
-            <Image
-              src="/greek-bracelet.webp"
-              alt="Bracelet"
-              width={400}
-              height={300}
-              className="h-40 w-full object-cover rounded mb-4"
-            />
-            <h3 className="font-semibold text-black">Greek Bracelet</h3>
-            <p className="text-gray-700">$49.99</p>
-          </div>
-        </div>
-      </section>
+    {/* Product 1 */}
+    <ProductCard
+      product={{
+        id: 1,
+        name: "Vanilla Candle",
+        price: 12.99,
+        description: "Hand-poured vanilla scented candle.",
+        category: "Candles",
+        image_url: "/images/vanilla_candle.jpg",
+      }}
+    />
+
+    {/* Product 2 */}
+    <ProductCard
+      product={{
+        id: 4,
+        name: "Crochet Plushie Gray",
+        price: 18.99,
+        description: "Soft gray crochet plushie.",
+        category: "Plushies",
+        image_url: "/images/crochet_plushie_gray.jpg",
+      }}
+    />
+
+    {/* Product 3 */}
+    <ProductCard
+      product={{
+        id: 14,
+        name: "Greek Bracelet",
+        price: 14.99,
+        description: "Handmade bracelet with Greek-inspired design.",
+        category: "Jewelry",
+        image_url: "/images/greek_bracelet.webp",
+      }}
+    />
+
+  </div>
+</section>
 
       {/* WHY CHOOSE US */}
       <section className="px-42 py-16 bg-white text-background">
@@ -109,7 +114,7 @@ export default function Home() {
           <div>
             <Image
               src="/delivery-truck.webp"
-              alt="Delvery Truck"
+              alt="Delivery Truck"
               width={400}
               height={300}
               className="h-30 w-30 rounded mb-4"
@@ -131,7 +136,6 @@ export default function Home() {
         </h3>
 
         <div className="flex flex-col md:flex-row items-center gap-10 max-w-6xl mx-auto">
-          {/* LEFT: IMAGE */}
           <div className="w-full md:w-1/2 flex justify-center">
             <Image
               src="/customers.webp"
@@ -143,11 +147,9 @@ export default function Home() {
             />
           </div>
 
-          {/* RIGHT: REVIEWS */}
           <div className="w-full md:w-1/2 flex flex-col gap-6">
-            {/* REVIEW 1 */}
             <div className="bg-white p-4 rounded-lg shadow">
-              <div className="text-[#6F1D1B]-500 text-lg">★★★★★</div>
+              <div className="text-[#6F1D1B] text-lg">★★★★★</div>
               <p className="italic text-[#6F1D1B]">
                 &quot;I love the quality and uniqueness of the products. Highly
                 recommend!&quot;
@@ -155,9 +157,8 @@ export default function Home() {
               <p className="font-semibold mt-2">– John D.</p>
             </div>
 
-            {/* REVIEW 2 */}
             <div className="bg-white p-4 rounded-lg shadow">
-              <div className="text-[#6F1D1B]-500 text-lg">★★★★☆</div>
+              <div className="text-[#6F1D1B] text-lg">★★★★☆</div>
               <p className="italic text-[#6F1D1B]">
                 &quot;The craftsmanship is amazing. I get compliments every time
                 I wear my bracelet!&quot;
@@ -165,9 +166,8 @@ export default function Home() {
               <p className="font-semibold mt-2">– Sarah K.</p>
             </div>
 
-            {/* REVIEW 3 */}
             <div className="bg-white p-4 rounded-lg shadow">
-              <div className="text-[#6F1D1B]-500 text-lg">★★★★★</div>
+              <div className="text-[#6F1D1B] text-lg">★★★★★</div>
               <p className="italic text-[#6F1D1B]">
                 &quot;Fast shipping and excellent customer service. Will buy
                 again!&quot;

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import ShoppingCart from "../shop/components/shoppingCart";
 
 export const metadata = {
   title: "About Us | Handcrafted Haven",
@@ -10,7 +11,6 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <div className="bg-[#FFE6A7]">
-      
       <section className="relative h-[150px] flex items-center justify-center bg-[#6F1D1B]">
         <div className="absolute inset-0 bg-black/40 z-10" />
         <div className="relative z-20 text-center text-white px-4 max-w-3xl">
@@ -22,6 +22,10 @@ export default function AboutPage() {
       </section>
 
       <section className="px-6 md:px-12 py-16 max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-10">
+          <h2 className="text-4xl font-bold text-[#6F1D1B]"></h2>
+          <ShoppingCart />
+        </div>
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl font-bold text-[#6F1D1B] mb-4">
@@ -29,7 +33,8 @@ export default function AboutPage() {
             </h2>
             <div className="w-20 h-1 bg-[#6F1D1B] mb-6" />
             <p className="text-gray-700 mb-4 leading-relaxed">
-              Founded in 2026, Handcrafted Haven is about preserving the art of craftsmanship.
+              Founded in 2026, Handcrafted Haven is about preserving the art of
+              craftsmanship.
             </p>
             <p className="text-gray-700 mb-4 leading-relaxed">
               Each piece in our collection is thoughtfully created by skilled
@@ -55,16 +60,15 @@ export default function AboutPage() {
       <section className="bg-white py-16 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-[#6F1D1B] mb-4">
-            Our Believe On Quality Craftsmanship
+            Our Values
           </h2>
           <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
             Our values guide everything we do, from selecting materials to
             delivering your order
           </p>
           <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
-            We never compromise on quality. Each piece is inspected by hand
-            to ensure it meets our exacting standards before it reaches
-            your home.
+            We never compromise on quality. Each piece is inspected by hand to
+            ensure it meets our exacting standards before it reaches your home.
           </p>
         </div>
       </section>
