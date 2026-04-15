@@ -40,7 +40,7 @@ export default function ContactConfirmationPage() {
           </div>
 
           <h2 className="text-2xl md:text-3xl font-bold text-[#6F1D1B] mb-4">
-            We've received your message!
+            We&apos;ve received your message!
           </h2>
 
           <p className="text-gray-700 mb-6 leading-relaxed">

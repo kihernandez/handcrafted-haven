@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export interface User {
   id: number;
@@ -8,18 +9,12 @@ export interface User {
   created_at?: string;
 }
 
-/**
- * Hook to get current authenticated user
- * Returns { user, loading, error, logout }
- */
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  const pathname = usePathname(); 
 
   const fetchUser = async () => {
     try {
@@ -45,6 +40,11 @@ export function useAuth() {
       setLoading(false);
     }
   };
+
+ 
+  useEffect(() => {
+    fetchUser();
+  }, [pathname]);
 
   const logout = async () => {
     try {

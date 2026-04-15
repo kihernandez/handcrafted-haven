@@ -6,12 +6,12 @@ export default function CustomerDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded shadow">
           <h2 className="text-xl font-semibold">Order History</h2>
-          <p className="text-gray-600 mt-2">Track your past purchases.</p>
+          <p className="text-gray-600 mt-2">No orders yet — demo mode.</p>
         </div>
 
         <div className="bg-white p-6 rounded shadow">
           <h2 className="text-xl font-semibold">Saved Items</h2>
-          <p className="text-gray-600 mt-2">View your wishlist.</p>
+          <p className="text-gray-600 mt-2">Your wishlist is empty.</p>
         </div>
 
         <div className="bg-white p-6 rounded shadow">

@@ -13,7 +13,7 @@ export default function ContactPage() {
         <div className="relative z-20 text-center text-white px-4 max-w-3xl">
           <h1 className="text-5xl md:text-6xl font-bold mb-4">Contact Us</h1>
           <p className="text-xl md:text-2xl">
-            We'd love to hear from you
+            We&apos;d love to hear from you
           </p>
         </div>
       </section>
@@ -27,7 +27,7 @@ export default function ContactPage() {
             </h2>
             <div className="w-20 h-1 bg-[#6F1D1B] mb-6" />
             <p className="text-gray-700 mb-8 leading-relaxed">
-              Have a question about our handmade products? We'd love to hear from you. 
+              Have a question about our handmade products? We&apos;d love to hear from you. 
               Reach out to us through any of the channels below or fill out the form.
             </p>
 
@@ -211,7 +211,7 @@ export default function ContactPage() {
               </button>
 
               <p className="text-xs text-gray-500 text-center mt-4">
-                We'll get back to you within 24-48 hours. (No actual message will be stored)
+                We&apos;ll get back to you within 24-48 hours. (No actual message will be stored)
               </p>
             </form>
           </div>

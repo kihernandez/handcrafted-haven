@@ -5,22 +5,36 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+type CheckoutForm = {
+  fullName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+};
+
 export default function CheckoutPage() {
   const { cart, totalPrice, clearCart } = useCart();
   const [isClient, setIsClient] = useState(false);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<CheckoutForm>({
     fullName: '',
     email: '',
     phone: '',
     address: '',
     city: '',
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
+    const enableClient = () => {
+      setIsClient(true);
+    };
+
+    enableClient();
   }, []);
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));

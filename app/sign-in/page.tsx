@@ -3,6 +3,7 @@
 import { useState, FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/use-auth";
 
 function isValidEmail(email: string) {
   return /\S+@\S+\.\S+/.test(email);
@@ -15,7 +16,9 @@ export default function Page() {
   const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({ email: "", password: "" });
+
   const router = useRouter();
+  const { refresh } = useAuth(); 
 
   const validate = () => {
     const errors = { email: "", password: "" };
@@ -65,13 +68,16 @@ export default function Page() {
         return;
       }
 
+      
+      await refresh();
+      router.refresh();
+
       setSuccess("Welcome back! You have successfully signed in.");
       setIsLoading(false);
 
-      // Redirect after a short delay
       setTimeout(() => {
         router.push("/dashboard");
-      }, 1500);
+      }, 800);
     } catch (err) {
       console.error("Login error:", err);
       setError("An error occurred during login. Please try again.");
@@ -103,10 +109,7 @@ export default function Page() {
 
         <form className="space-y-5" onSubmit={handleSubmit} noValidate>
           <div>
-            <label
-              className="block mb-1.5 font-medium text-gray-700"
-              htmlFor="email"
-            >
+            <label className="block mb-1.5 font-medium text-gray-700" htmlFor="email">
               Email Address
             </label>
             <input
@@ -124,14 +127,12 @@ export default function Page() {
               <p className="mt-1 text-sm text-red-600">{fieldErrors.email}</p>
             )}
           </div>
+
           <div>
             <div className="flex justify-between mb-1.5">
               <label className="font-medium text-gray-700" htmlFor="password">
                 Password
               </label>
-              <a href="#" className="text-sm text-[#6F1D1B] hover:underline">
-                Forgot password?
-              </a>
             </div>
             <input
               type="password"
@@ -145,9 +146,7 @@ export default function Page() {
               required
             />
             {fieldErrors.password && (
-              <p className="mt-1 text-sm text-red-600">
-                {fieldErrors.password}
-              </p>
+              <p className="mt-1 text-sm text-red-600">{fieldErrors.password}</p>
             )}
           </div>
 
@@ -162,10 +161,7 @@ export default function Page() {
 
         <div className="text-center text-sm text-gray-600">
           Don&apos;t have an account?{" "}
-          <Link
-            href="/sign-up"
-            className="text-[#6F1D1B] font-bold hover:underline"
-          >
+          <Link href="/sign-up" className="text-[#6F1D1B] font-bold hover:underline">
             Sign Up
           </Link>
         </div>
